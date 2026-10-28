@@ -1,0 +1,68 @@
+# ==========================================================================
+# .gitignore - Projeto Quartus Prime (FPGA) + Processador em Verilog
+# ==========================================================================
+# A ideia e versionar apenas o codigo-fonte (.v) e os arquivos de projeto
+# essenciais (.qpf, .qsf) + os programas em binario. Todo o resto
+# (resultados de sintese, bancos de dados intermediarios e artefatos) e
+# gerado pelo Quartus a cada compilacao e NAO deve ir para o repositorio.
+
+# --- Bancos de dados e resultados de compilacao do Quartus ---
+db/
+incremental_db/
+output_files/
+qdb/
+dni/
+greybox_tmp/
+hc_output/
+hps_isw_handoff/
+.qsys_edit/
+timing/
+
+# --- Relatorios e logs gerados ---
+*.rpt
+*.rpt.*
+*.summary
+*.log
+*.qarlog
+*.jdi
+*.pin
+*.done
+*.smsg
+*.qmsg
+*.sld
+*.sof
+*.pof
+*.jam
+*.jbc
+*.svf
+*.cdf
+
+# --- Arquivos temporarios / backups do editor do Quartus ---
+*.bak
+*.orig
+*.swp
+*.qws
+
+# --- Arquivos de assignment gerados automaticamente ---
+# (mantemos processador.qsf e processador.qpf, que sao a fonte do projeto)
+*_assignment_defaults.qdf
+assignment_defaults.qdf
+
+# --- Pacotes/arquivos de arquivamento ---
+# Os .qar (archives do Quartus) sao versionados como backup em backup/.
+# O .zip e demais pacotes grandes ficam de fora.
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.qarlog
+
+# --- Sistema operacional ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Editores / IDE ---
+.vscode/
+.idea/
+*.code-workspace
