@@ -70,8 +70,8 @@ Formato geral: `opcode[31:24] | RN[23:18] | RD[17:12] | ... | RM[5:0] | IMM`.
 | `00000001`   | 1   | `addi`     | `RD = RN + IMM`                             |
 | `00000010`   | 2   | `sub`      | `RD = RN - RM`                              |
 | `00000011`   | 3   | `subi`     | `RD = RN - IMM`                             |
-| `00000100`   | 4   | `cmp`      | compara `RN`,`RM` e atualiza flags          |
-| `00000101`   | 5   | `cmpi`     | compara `RN`,`IMM` e atualiza flags         |
+| `00000100`   | 4   | `cmp`      | compara `RN` e `RM`, resultado em `RD`      |
+| `00000101`   | 5   | `cmpi`     | compara `RN` e `IMM`, resultado em `RD`     |
 | `00000110`   | 6   | `mov`      | `RD = RM`                                   |
 | `00000111`   | 7   | `mult`     | `RD = RN * RM`                              |
 | `00001000`   | 8   | `multi`    | `RD = RN * IMM`                             |
@@ -102,13 +102,16 @@ Formato geral: `opcode[31:24] | RN[23:18] | RD[17:12] | ... | RM[5:0] | IMM`.
 o acesso à memória no seguinte. Essas instruções foram adicionadas para dar ao
 SO acesso indireto a registradores/memória.
 
-### Flags da ULA (comparação)
+### Resultado da comparação (cmp / cmpi)
 
-A operação de `cmp` grava em um registrador de flags:
+`cmp` e `cmpi` gravam o resultado da comparação em `RD`:
 
-- `0` → `RN > RM` (maior)
-- `1` → `RN == RM` (igual)
-- `2` → `RN < RM` (menor)
+- `0` → `RN > RM` / `RN > IMM` (maior)
+- `1` → `RN == RM` / `RN == IMM` (igual)
+- `2` → `RN < RM` / `RN < IMM` (menor)
+
+Esse valor em `RD` é usado depois pelas instruções de desvio (`beq`, `bnq`,
+`bgt`, `blt`), que a unidade de controle lê como flags.
 
 ## Como compilar e gravar
 
