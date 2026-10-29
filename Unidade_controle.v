@@ -97,7 +97,7 @@ module Unidade_controle(
             MEM_REG     = 2'b01;
             ALU_SRC     = 1'b1;
             ALU_CNTRL   = 3'b000;
-            IMM_CNTRL   = 3'b000;
+            IMM_CNTRL = 3'b001;
             PC_E        = 1'b1;
             E_REGO      = 1'b0;
             REG_WE15    = 1'b0;
@@ -131,7 +131,7 @@ module Unidade_controle(
             MEM_REG     = 2'b01;
             ALU_SRC     = 1'b1;
             ALU_CNTRL   = 3'b001;
-            IMM_CNTRL   = 3'b000;
+            IMM_CNTRL = 3'b001;
             PC_E        = 1'b1;
             E_REGO      = 1'b0;
             REG_WE15    = 1'b0;
@@ -165,7 +165,7 @@ module Unidade_controle(
             MEM_REG     = 2'b01;
             ALU_SRC     = 1'b1;
             ALU_CNTRL   = 3'b110;
-            IMM_CNTRL   = 3'b000;
+            IMM_CNTRL = 3'b001;
             PC_E        = 1'b1;
             E_REGO      = 1'b0;
             REG_WE15    = 1'b0;
@@ -216,7 +216,7 @@ module Unidade_controle(
             MEM_REG     = 2'b01;
             ALU_SRC     = 1'b1;
             ALU_CNTRL   = 3'b011;
-            IMM_CNTRL   = 3'b000;
+            IMM_CNTRL = 3'b001;
             PC_E        = 1'b1;
             E_REGO      = 1'b0;
             REG_WE15    = 1'b0;
@@ -250,7 +250,7 @@ module Unidade_controle(
             MEM_REG     = 2'b01;
             ALU_SRC     = 1'b1;
             ALU_CNTRL   = 3'b010;
-            IMM_CNTRL   = 3'b000;
+            IMM_CNTRL = 3'b001;
             PC_E        = 1'b1;
             E_REGO      = 1'b0;
             REG_WE15    = 1'b0;
