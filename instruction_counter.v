@@ -5,7 +5,7 @@ module instruction_counter (
 	input wire [31:0] target_count,       // Número alvo de instruções
 	input wire [31:0] instruction,    // Instrução atual
 	input wire [7:0] opcode,    // opcode da instrução atual
-	output reg overflow_flag,                          // Flag indicando que atingiu o alvo
+	output wire overflow_flag,                          // Flag indicando que atingiu o alvo
 	output reg [31:0] overflow_instruction//, // Instrução que causou overflow
 	//output wire [31:0] saida_prev,
 	//output wire [31:0] saida_curr,
@@ -21,16 +21,22 @@ module instruction_counter (
 	reg [31:0] counter, target;
 	reg [31:0] prev_inst;
 	reg [31:0]curr_inst;
+	reg overflow_reg;
+	wire opcode_is_out = (opcode == 8'b00010110);   // OUT (22)
+	wire opcode_is_halt = (opcode == 8'b00011001);   // HALT (25)
+	wire opcode_excecao = (opcode == 8'b00010101)   // IN  (21) - I/O bloqueante
+                   || (opcode == 8'b00010110);  // OUT (22) - I/O bloqueante multibyte
+
 	// ========================================
 	// BLOCO 1: Registrador de estado (sequencial)
 	// ========================================
 	always @(posedge clk) begin
-		if(rst) begin
+		if(rst || opcode_is_halt) begin
 			prev_inst <= instruction;
 			curr_inst <= instruction;
 			current_state <= 2'd0;
 			counter <= 32'd0;
-			overflow_flag <= 0;
+			overflow_reg <= 0;
 			overflow_instruction <= 32'd0;
 		end
 		else begin
@@ -46,19 +52,30 @@ module instruction_counter (
 			end
 			
 			else if(current_state == COUNTING) begin
-				if (prev_inst != curr_inst && opcode != 8'b00010101) begin
+				if (prev_inst != curr_inst && !opcode_excecao) begin
 					counter <= counter + 1;
 				end
-				if(counter + 1 >= target && opcode != 8'b00010101)begin
-					overflow_flag <= 1;
+				if(counter + 1 >= target && !opcode_excecao) begin
+					overflow_reg <= 1;
 					current_state <= OVERFLOW;
 				end
 			end
 			
-			else if(current_state == OVERFLOW) begin
+			/*else if(current_state == OVERFLOW) begin
 				overflow_flag <= 0;
 				current_state <= IDLE;
 				overflow_instruction <= instruction;
+			end*/
+
+			else if(current_state == OVERFLOW) begin
+				if (opcode_is_out) begin
+					overflow_reg  <= 1;        // segura: OUT ainda executando
+					current_state <= OVERFLOW;
+				end else begin
+					overflow_reg         <= 0;
+					current_state        <= IDLE;
+					overflow_instruction <= instruction;
+				end
 			end
 			
 			else begin
@@ -73,6 +90,7 @@ module instruction_counter (
 		end
 	end
 	
+	assign overflow_flag = overflow_reg & ~opcode_is_out;
 	//assign saida_prev = prev_inst;
 	//assign saida_curr = curr_inst;
 	//assign saida_count = counter;
