@@ -59,6 +59,8 @@ module processador(
     wire tx_actiuve_bus;
     wire [7:0] usm_data_bus;
     wire uart_send_bus;
+    wire [31:0] out_concat_bus;
+    assign out_concat_bus = {r57_out_bus[15:0], alu_out_bus[15:0]};
 
     // --- Instanciação dos Módulos ---
 
@@ -121,7 +123,7 @@ module processador(
 	);
 
 	uart_state_machine usm (
-		.clk(clock), .reset(~reset_btn), .data_in(alu_out_bus),
+		.clk(clock), .reset(~reset_btn), .data_in(out_concat_bus),
 		.start(out_cntrl_reg_bus), .uart_ready(~tx_actiuve_bus),
 		.uart_data(usm_data_bus), .uart_send(uart_send_bus), .done(done_sm_tx_bus)
 	);

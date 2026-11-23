@@ -18,12 +18,12 @@ module Mem_Instr
 
 	initial
 	begin
-		$readmemb("codigos/so_bin.txt", rom, 12'd000, 12'd299);  // Posição 0x000
-		$readmemb("codigos/area_bin.txt", rom, 12'd300, 12'd599);  // Posição 0x300
-		$readmemb("codigos/div_bin.txt", rom, 12'd600, 12'd899);  // Posição 0x600
-		$readmemb("codigos/fat_bin.txt", rom, 12'd900, 12'd1199);  // Posição 0x900
-		$readmemb("codigos/fib_bin.txt", rom, 12'd1200, 12'd1499);  // Posição 0x1200
-		$readmemb("codigos/gcd_bin.txt", rom, 12'd1500, 12'd1799);  // Posição 0x1500
+		$readmemb("C:/Users/gbelo/Documents/Unifesp/labso/c-minus-compiler/saida/os/bin.txt", rom, 12'd000, 12'd399);  // Posição 0x000
+		$readmemb("codigos/area_bin.txt", rom, 12'd400, 12'd699);  // Posição 0x300
+		$readmemb("codigos/div_bin.txt", rom, 12'd700, 12'd999);  // Posição 0x600
+		$readmemb("codigos/fat_bin.txt", rom, 12'd1000, 12'd1299);  // Posição 0x900
+		$readmemb("codigos/fib_bin.txt", rom, 12'd1300, 12'd1599);  // Posição 0x1200
+		$readmemb("codigos/gcd_bin.txt", rom, 12'd1600, 12'd1899);  // Posição 0x1500
 		//$readmemb("codigos/mult_bin.txt", rom, 12'd1800);  // Posição 0x1800
 		//$readmemb("codigos/pot_bin.txt", rom, 12'd2100);  // Posição 0x2100
 		//$readmemb("codigos/soma_bin.txt", rom, 12'd2400);  // Posição 0x2400
